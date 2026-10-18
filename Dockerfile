@@ -1,15 +1,16 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ENV HOME=/home/zoomrec \
     TZ=Europe/Berlin \
     TERM=xfce4-terminal \
     START_DIR=/start \
     DEBIAN_FRONTEND=noninteractive \
-    VNC_RESOLUTION=1024x576 \
+    VNC_RESOLUTION=1920x1080 \
     VNC_COL_DEPTH=24 \
     VNC_PW=zoomrec \
     VNC_PORT=5901 \
-    DISPLAY=:1
+    DISPLAY=:1 \
+    XDG_SESSION_TYPE=x11
 
 # Add user
 RUN useradd -ms /bin/bash zoomrec -d ${HOME}
@@ -26,7 +27,7 @@ RUN apt-get update && \
         publicsuffix \
         libapt-pkg6.0 \
         libpsl5 \
-        libssl1.1 \
+        libssl3 \
         libnss3 \
         openssl \
         wget \
@@ -71,8 +72,17 @@ RUN apt-get update && \
         libxcb-randr0 \
         libxcb-image0 \
         libfontconfig1 \
-        libgl1-mesa-glx \
-        libegl1-mesa \
+        libgl1 \
+        libegl1 \
+        libopengl0 \
+        libgbm1 \
+        libdrm2 \
+        libxcb-cursor0 \
+        libxcb-icccm4 \
+        libxtst6 \
+        libdbus-1-3 \
+        libatomic1 \
+        desktop-file-utils \
         libxi6 \
         libsm6 \
         libxrender1 \
@@ -83,7 +93,7 @@ RUN apt-get update && \
         libxcb-keysyms1 \
         libxcb-xtest0 && \
 # Install Zoom
-    wget -q -O zoom_amd64.deb https://cdn.zoom.us/prod/5.13.4.711/zoom_amd64.deb && \
+    wget -q -O zoom_amd64.deb https://cdn.zoom.us/prod/7.2.1.5760/zoom_amd64.deb && \
     dpkg -i zoom_amd64.deb && \
     apt-get -f install -y && \
     rm -rf zoom_amd64.deb && \
