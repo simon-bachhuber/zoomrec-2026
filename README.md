@@ -1,3 +1,5 @@
+## ❗ fork of https://github.com/kastldratza/zoomrec but updated to work in 2026 ❗
+
 <h1 align="center">
     zoomrec	
 </h1>
